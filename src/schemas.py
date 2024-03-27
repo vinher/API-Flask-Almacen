@@ -4,7 +4,8 @@ ma = Marshmallow()
 
 class ProductSchema(ma.Schema):
     class Meta:
-        fields = ('nombre', 'precio', 'stock', 'imagen')
+        #Campos que va aconsultar la base de datos
+        fields = ('id','nombre', 'precio', 'stock', 'imagen')
 
-productSchema = ProductSchema()
+productSchema   = ProductSchema()
 productsSchemas = ProductSchema(many=True)
