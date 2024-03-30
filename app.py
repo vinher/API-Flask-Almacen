@@ -11,12 +11,12 @@ def create_app():
     db.init_app(app)
     ma.init_app(app)
     #Manejo de tabla producto
-    app.route('/add/product'        , methods=['POST'])(create_product)
-    app.route('/list/product'       , methods=['GET'])(list_products)
-    app.route('/search/product/<id>', methods=['GET'])(get_product)
-    app.route('/update/product/<id>', methods=['PUT'])(update_product)
+    app.route('/add/product'        , methods=['POST'])  (create_product)
+    app.route('/list/product'       , methods=['GET'])   (list_products)
+    app.route('/search/product/<id>', methods=['GET'])   (get_product)
+    app.route('/update/product/<id>', methods=['PUT'])   (update_product)
     app.route('/delete/product/<id>', methods=['DELETE'])(delete_product)
-    app.route('/generate/pdf'      , methods=['GET'])(generate_pdf)
+    app.route('/generate/pdf'       , methods=['GET'])   (generate_pdf)
 
     return app
 

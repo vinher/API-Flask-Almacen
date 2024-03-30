@@ -13,52 +13,76 @@ import tempfile
 #Agregar manejo de formatos PDF
 
 def create_product():
-    nombre_product  = request.json['nombre']
-    precio_venta    = request.json['precio']
-    stock           = request.json['stock']
-    image_product   = request.json['image']
+    try:
+        nombre_product  = request.json['nombre']
+        precio_venta    = request.json['precio']
+        stock           = request.json['stock']
+        image_product   = request.json['image']
 
-    new_product = Producto(nombre_product, precio_venta, stock, image_product)
-    db.session.add(new_product)
-    db.session.commit()
+        new_product = Producto(nombre_product, precio_venta, stock, image_product)
+        db.session.add(new_product)
+        db.session.commit()
 
-    return productSchema.jsonify(new_product)
+        return productSchema.jsonify(new_product)
+    except Exception as ex:
+        return ex
 
 def list_products():
-    all_products = Producto.query.all()
- 
-    result = productsSchemas.dump(all_products)
-    print(result)
-    return jsonify(result)
+    try:
+        all_products = Producto.query.all()
+        if(all_products != None):
+            result = productsSchemas.dump(all_products)
+            return jsonify(result)
+        else:
+            return [{"success":False,"message":"Products not found"}]
+    except Exception as ex:
+        return ex
+
 
 def get_product(id):
-    product = Producto.query.get(id)
-    return productSchema.jsonify(product)
+    try:
+        product = Producto.query.get(id)
+        if(product != None):
+            return productSchema.jsonify(product)
+        else:
+            return [{"success":False,"message":"Product {0} not found".format(id)}]
+    except Exception as ex:
+        return ex
 
-# first function valid is exist data
 def update_product(id):
-    product = Producto.query.get(id)
-    if(product != None):
-        nombre  = request.json['nombre']
-        precio  = request.json['precio']
-        stock   = request.json['stock']
-        image   = request.json['image']
+    try:
+        product = Producto.query.get(id)
+        if(product != None):
+            nombre  = request.json['nombre']
+            precio  = request.json['precio']
+            stock   = request.json['stock']
+            image   = request.json['image']
 
-        product.nombre = nombre
-        product.precio = precio
-        product.stock  = stock
-        product.image  = image
+            product.nombre = nombre
+            product.precio = precio
+            product.stock  = stock
+            product.image  = image
 
-        db.session.commit()
-        return [{"success":True,"message":"Product {0} Updated".format(id)}]
-    else:
-        return [{"success":False,"message":"Product {0} not found".format(id)}]
+            db.session.commit()
+            return [{"success":True,"message":"Product {0} Updated".format(id)}]
+        else:
+            return [{"success":False,"message":"Product {0} not found".format(id)}]
+    except Exception as ex:
+        return ex
+    
 
 def delete_product(id):
-    product = Producto.query.get(id)
-    db.session.delete(product)
-    db.session.commit()
-    return productSchema.jsonify(product)
+    try:
+        product = Producto.query.get(id)
+        if(product != None):
+            db.session.delete(product)
+            db.session.commit()
+            return productSchema.jsonify(product)
+        else:
+            return [{"success":False,"message":"Product {0} not found".format(id)}]
+    except Exception as ex:
+        return ex
+    
 
 
 def generate_pdf():
