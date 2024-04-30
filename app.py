@@ -10,7 +10,18 @@ def create_app():
 
     db.init_app(app)
     ma.init_app(app)
-    #Manejo de tabla producto
+
+
+    #Manejo Tabla Usuarios Implementar
+    app.route('/add/user'           , methods=['POST'])  (create_product)
+    app.route('/update/user'        , methods=['PUT'])   (list_products)
+    app.route('/delete/user/<id>'   , methods=['DELETE'])(get_product)
+    app.route('/all/user/<id>'      , methods=['GET'])   (update_product)
+    app.route('/search/user/<id>'   , methods=['GET'])   (delete_product)
+    app.route('/generate/users'     , methods=['GET'])   (generate_pdf)
+
+
+    #Manejo de tabla productos
     app.route('/add/product'        , methods=['POST'])  (create_product)
     app.route('/list/product'       , methods=['GET'])   (list_products)
     app.route('/search/product/<id>', methods=['GET'])   (get_product)
@@ -18,8 +29,13 @@ def create_app():
     app.route('/delete/product/<id>', methods=['DELETE'])(delete_product)
     app.route('/generate/pdf'       , methods=['GET'])   (generate_pdf)
 
+    #Manejo Tabla Clientes
+
+
+
+
     return app
 
 if __name__ == '__main__':
     app = create_app()
-    app.run(debug=True)
+    app.run(host='0.0.0.0',debug=True)
