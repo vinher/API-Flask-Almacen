@@ -26,8 +26,11 @@ def create_product():
         
         create_image_base64(image_product, nombre_product)
         
+        path_name = 'http://127.0.0.1:5000/static/images/{0}.png'.format(nombre_product)
+
+        print(path_name);
         
-        new_product = Producto(nombre_product, precio_venta, stock, nombre_product)
+        new_product = Producto(nombre_product, precio_venta, stock, "{0}".format(path_name))
         db.session.add(new_product)
         db.session.commit()
 
@@ -119,7 +122,6 @@ def generate_pdf():
 
     # Finalizar el lienzo
     c.save()
-
     # Devolver el archivo PDF como respuesta
     return send_file(temp_pdf.name, as_attachment=True,download_name="ejemplo.pdf")
 
@@ -132,7 +134,7 @@ def create_image_base64(image,name):
     return image
 
 
-def save_url_image(image):
-    path = '/home/kevin/PersonalProjects/Backend/Python/Flask/flask_api/static/images/'
-    print("{0}.png".format(image))
-    return send_from_directory(path,image)
+def save_url_image(filename):
+    print(filename)
+    path = '~/PersonalProjects/Backend/Python/Flask/flask_api/static/images/'
+    return send_from_directory(path,"{0}.png".format(filename))
